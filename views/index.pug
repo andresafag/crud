@@ -1,0 +1,154 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css")
+    link(rel="stylesheet", href="/styles.css")
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title main
+  body
+      .title
+        h1 CHARACTERANDOM 
+      div#formBox
+        form(method='POST' action='/character' id="formulary" enctype="multipart/form-data")
+          div.formBoxIn
+            .field
+              label(for="name") Name
+              .control
+                input(name="name" placeholder="enter the name")
+          div.formBoxIn
+            .field
+              label(for="city") City
+              .control
+                input(name="city" placeholder="enter the born place")
+          div.formBoxIn
+            .field
+              label(for="name") Age
+              .control
+                input(name="age" placeholder="enter the age")
+          div.formBoxIn
+            .field
+              label(for="profession") Profession
+              .control
+                input(name="profession" placeholder="enter the profession")
+          div.formBoxIn
+            .field
+              label(for="files") Upload images
+              .control
+                input(name="myFile" id="myFile" type="file")
+          div.submit
+            input.input(type='submit' value='Submit')
+      div#searchBox 
+        form(method='GET' action='/api' id="api")
+          div.formBoxOut
+            .field
+              label(for="arc") Enter the name of the character
+              .control
+                input(name="archivos"  id="archivos" placeholder="eminem")
+            div.submit
+              input.input.sub#sub(type='submit' value='Search')
+        form(method='POST' action='/update')
+          .characterName
+            label(for='nameToChange') Character Name
+            input(type='text' name='nameToChange' class='charactTpChange'  value='')
+          .updateBox
+            span What content would you like to update?
+            #name
+              label(for='name') Name
+              input(type='checkbox' class='name'  value='name')
+              .nameBox.show
+                input(type='text'  name='name' value='')
+            #city
+              label(for='city')  City
+              input(type='checkbox' class='city'  value='city')
+              .cityBox.show
+                input(type='text' name='city' value='')
+            #age
+              label(for='age')  Age
+              input(type='checkbox' class='age' value='age')
+              .ageBox.show
+                input(type='text' name='age' value='')
+            #profesion
+              label(for='profession')  Profession
+              input(type='checkbox'  class='profesion' value='profession')
+              .professionBox.show
+                input(type='text' name='profession' value='')
+            #image
+              label(for='image')  Imag
+              input(type='checkbox'  class='image' value='image')
+              .imageBox.show
+                input(type='text' name='image' value='')
+            #all
+              label(for='all')  All
+              input(type='checkbox' name='all' class='all' value='all')
+              .allBox.show
+                input(type='text' name='allChoice' value='')
+            div.submit
+              input.input#subUpdate(type='submit' value='Update')
+        form(method='POST' action='/del')
+          .deleteContent
+            .field
+              label(for="name") Character to delete
+              .control
+                input(name="delName" placeholder="enter who you want to delete")
+            input.input.sub#sub(type='submit' value='Delete')
+        form(method='GET' action='/clear')
+          .clearContent
+            input.input.sub#sub(type='submit' value='Clear')
+          #outputBox
+            span#name Name: #{nombre}
+            span#city City: #{ciudad}
+            span#edad Age: #{edad}
+            span#profesion Profession: #{profesion}
+            span#imag #{imagen}
+            img#imagensita
+  script.
+    let imagensitaText = document.querySelector('#imag').outerText
+        imagensita = document.querySelector('#imagensita'),
+        subUpdate = document.querySelector('#subUpdate'),
+        name= document.querySelector('.name').addEventListener('change', getCheckValue),
+        city = document.querySelector('.city').addEventListener('change', getCheckValue),
+        age = document.querySelector('.age').addEventListener('change', getCheckValue),
+        profesion = document.querySelector('.profesion').addEventListener('change', getCheckValue),
+        image = document.querySelector('.image').addEventListener('change', getCheckValue),
+        all = document.querySelector('.all'),
+        nameBox = document.querySelector('.nameBox'),
+        cityBox = document.querySelector('.cityBox'),
+        ageBox = document.querySelector('.ageBox'),
+        professionBox = document.querySelector('.professionBox'),
+        imageBox = document.querySelector('.imageBox')
+        
+    imagensita.src=imagensitaText
+
+    function getCheckValue(){
+      switch(this.value) {
+        case 'name':
+        nameBox.classList.toggle('show')
+        console.log(this.value)
+        nameBox.firstChild.focus()
+        break;
+        case 'city':
+        cityBox.classList.toggle('show')
+        cityBox.firstChild.focus()
+        break;
+        case 'age':
+        ageBox.classList.toggle('show')
+        ageBox.firstChild.focus()
+        break;
+        case 'profession':
+        professionBox.classList.toggle('show')
+        professionBox.firstChild.focus()
+        break;
+        case 'image':
+        imageBox.classList.toggle('show')
+        break;
+        case 'all':
+        nameBox.classList.remove('show')
+        cityBox.classList.remove('show')
+        ageBox.classList.remove('show')
+        professionBox.classList.remove('show')
+        imageBox.classList.remove('show')
+        break;
+        default:
+        console.log("bien")
+      } 
+      }
